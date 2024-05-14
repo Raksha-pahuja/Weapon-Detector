@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weapon Detector</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg">
+        <div class="btn">
+            <button class="btn2" id="loadButton" onclick="runCommand()">Camera</button>
+        </div>
+        <div id="background">
+            <h4 id="load">Loading....Please wait</h4>
+            <div id="loadingSpinner"></div>
+        </div>
+    </div>
+
+
+
+    <!-- script -->
+    <script>
+          function runCommand() {
+            const command = "python detect.py --weights best.pt --source 0 "; // Set your predefined command here
+            fetch(`/runcmd?command=${encodeURIComponent(command)}`, { method: 'POST' })
+            .then(response => response.text())
+            .then(data => alert(data))
+            .then(data => console.log("working"))
+            .catch(error => console.error('Error:', error));
+        }
+
+        document.getElementById('loadButton').addEventListener('click', function() {
+    document.getElementById('load').style.display = 'inline-block';
+    document.getElementById('loadingSpinner').style.display = 'inline-block';
+    document.getElementById('background').style.display = 'inline-block';
+    document.getElementById('loadButton').style.display = 'none';
+
+
+    setTimeout(function() {
+        document.getElementById('load').style.display = 'none';
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('background').style.display = 'none';
+
+    }, 20000);
+});
+
+    </script>
+</body>
+</html>
